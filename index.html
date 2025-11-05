@@ -215,6 +215,26 @@
       background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
       border-radius: 20px;
       border: 2px solid rgba(102, 126, 234, 0.2);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+      }
+      
+      .header h1 {
+        font-size: 24px !important;
+        margin-bottom: 5px;
+      }
+      
+      .header .subtitle {
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
     }
     
     .user-info {
@@ -529,6 +549,155 @@
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.1); }
     }
+    
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      .container {
+        width: 95%;
+        margin: 10px auto;
+      }
+      
+      .login-card, .dashboard-card {
+        padding: 20px;
+        margin: 10px;
+      }
+      
+      h1 {
+        font-size: 28px !important;
+      }
+      
+      h2 {
+        font-size: 22px !important;
+      }
+      
+      h3 {
+        font-size: 18px !important;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .card {
+        padding: 20px;
+      }
+      
+      .input-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .journey-map {
+        padding: 20px;
+      }
+      
+      .journey-visual {
+        margin: 20px 0;
+        padding: 15px 0;
+      }
+      
+      .journey-path {
+        margin: 0 15px;
+      }
+      
+      .location-start, .location-end {
+        font-size: 48px;
+      }
+      
+      .city-marker {
+        font-size: 10px;
+      }
+      
+      .city-flag {
+        font-size: 24px;
+      }
+      
+      .journey-stats {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .journey-stat {
+        padding: 15px;
+        min-width: auto;
+      }
+      
+      .team-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .team-stats {
+        flex-direction: column;
+        gap: 8px;
+        font-size: 12px;
+      }
+      
+      .member-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 13px;
+      }
+      
+      .user-info {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .user-badge {
+        font-size: 14px;
+        padding: 10px 16px;
+      }
+      
+      .btn-logout {
+        font-size: 12px;
+        padding: 8px 16px;
+      }
+      
+      .stat-value {
+        font-size: 32px;
+      }
+      
+      .journey-stat-value {
+        font-size: 22px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .login-card, .dashboard-card {
+        padding: 15px;
+      }
+      
+      .journey-visual {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .journey-path {
+        width: 100%;
+        margin: 0;
+        position: relative;
+      }
+      
+      .city-marker {
+        position: relative;
+        top: auto;
+        transform: none;
+        display: inline-block;
+        margin: 0 5px;
+      }
+      
+      .team-token {
+        position: relative;
+        top: auto;
+        transform: none;
+        margin: 5px;
+        animation: none;
+      }
+    }
   </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
@@ -566,7 +735,7 @@
       <h1 id="dashboardWelcome">🏃‍♂️ Track Your Journey</h1>
       <p class="subtitle" id="journeyTitle">Japan to China Adventure - 7,730,000 Steps</p>
      </div>
-     <div class="user-info"><span class="user-badge" id="userBadge"></span> <button class="btn btn-logout" id="logoutBtn">👋 Logout</button>
+     <div class="user-info"><span class="user-badge" id="userBadge"></span> <button class="btn btn-secondary" id="profileBtn" style="width: auto; padding: 12px 24px; font-size: 14px; margin-right: 10px;">👤 Profile</button> <button class="btn btn-logout" id="logoutBtn">👋 Logout</button>
      </div>
     </div>
     <div id="updateSuccess" class="success-message hidden"></div><!-- Journey Map -->
@@ -661,13 +830,13 @@
      <h3>📊 Today's Activity Log</h3>
      <form id="activityForm">
       <div class="input-row">
-       <div class="form-group"><label for="stepsInput">👣 Steps Today</label> <input type="number" id="stepsInput" min="0" required placeholder="Enter your steps">
+       <div class="form-group"><label for="stepsInput">👣 Steps Today (Goal: 10,000)</label> <input type="number" id="stepsInput" min="0" required placeholder="Enter your steps">
        </div>
-       <div class="form-group"><label for="waterInput">💧 Water Intake (glasses)</label> <input type="number" id="waterInput" min="0" max="20" required placeholder="How many glasses?">
+       <div class="form-group"><label for="waterInput">💧 Water Intake (Goal: 8 cups = 2L)</label> <input type="number" id="waterInput" min="0" max="20" required placeholder="Number of 250ml cups">
        </div>
-       <div class="form-group"><label for="sittingInput">🪑 Sitting Hours</label> <input type="number" id="sittingInput" min="0" max="24" step="0.5" required placeholder="Hours spent sitting">
+       <div class="form-group"><label for="sittingInput">🪑 Sitting Hours (Penalty if &gt;4hrs)</label> <input type="number" id="sittingInput" min="0" max="24" step="0.5" required placeholder="Hours spent sitting">
        </div>
-      </div><button type="submit" class="btn btn-primary" id="updateBtn">🎯 Update Progress</button>
+      </div><button type="submit" class="btn btn-primary" id="updateBtn">🎯 Log Today's Activity</button>
      </form>
     </div><!-- Personal Stats -->
     <div class="grid">
@@ -687,6 +856,48 @@
       </div>
      </div>
      <div class="card">
+      <h3>📈 Your Daily Progress</h3>
+      <div id="personalChart" style="height: 200px; position: relative; background: rgba(255,255,255,0.5); border-radius: 12px; padding: 20px;">
+       <div id="chartBars" style="display: flex; align-items: end; height: 160px; gap: 8px; justify-content: space-between;"></div>
+       <div id="chartLabels" style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 12px; color: #718096;"></div>
+      </div>
+      <div style="margin-top: 15px; font-size: 14px; color: #718096; text-align: center;"><span style="display: inline-block; width: 12px; height: 12px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 2px; margin-right: 5px;"></span> Daily Steps (Last 7 Days)
+      </div>
+     </div>
+     <div class="card">
+      <h3>🎯 Today's Goals</h3>
+      <div style="margin-bottom: 20px;">
+       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;"><span style="font-weight: 600;">👣 Steps Goal (10,000)</span> <span id="stepsGoalStatus" class="hydration-status">Not Started</span>
+       </div>
+       <div class="progress-bar">
+        <div class="progress-fill" id="stepsGoalProgress" style="width: 0%"></div>
+       </div>
+       <div class="stat-label" id="stepsGoalText">
+        0 / 10,000 steps
+       </div>
+      </div>
+      <div style="margin-bottom: 20px;">
+       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;"><span style="font-weight: 600;">💧 Water Goal (2L / 8 cups)</span> <span id="waterGoalStatus" class="hydration-status">Not Started</span>
+       </div>
+       <div class="progress-bar">
+        <div class="progress-fill" id="waterGoalProgress" style="width: 0%"></div>
+       </div>
+       <div class="stat-label" id="waterGoalText">
+        0 / 8 cups (0ml / 2000ml)
+       </div>
+      </div>
+      <div>
+       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;"><span style="font-weight: 600;">🪑 Sitting Goal (≤4 hours)</span> <span id="sittingGoalStatus" class="hydration-status">Not Started</span>
+       </div>
+       <div class="progress-bar">
+        <div class="progress-fill" id="sittingGoalProgress" style="width: 0%"></div>
+       </div>
+       <div class="stat-label" id="sittingGoalText">
+        0 / 4 hours max
+       </div>
+      </div>
+     </div>
+     <div class="card">
       <h3>👥 Team Power</h3>
       <div class="stat-value" id="teamTotalSteps">
        0
@@ -695,6 +906,12 @@
        Team Total Steps
       </div>
       <div style="margin-top: 20px;"><span class="hydration-status" id="teamHydration">Calculating...</span>
+      </div>
+      <div style="margin-top: 15px;">
+       <div style="font-size: 14px; color: #718096; margin-bottom: 8px;">
+        Team Daily Goals Achievement
+       </div>
+       <div id="teamGoalsStats" style="font-size: 14px; font-weight: 600;"></div>
       </div>
      </div>
     </div><!-- Team Leaderboard -->
@@ -705,6 +922,100 @@
     <div class="card">
      <h3>🤝 Your Squad Members</h3>
      <div class="member-list" id="teamMembers"></div>
+    </div>
+   </div><!-- Profile Screen -->
+   <div id="profileScreen" class="dashboard-card hidden">
+    <div class="header">
+     <div>
+      <h1>👤 Your Profile</h1>
+      <p class="subtitle">Manage your adventure settings</p>
+     </div>
+     <div class="user-info"><button class="btn btn-secondary" id="backToDashboardBtn" style="width: auto; padding: 12px 24px; font-size: 14px;">⬅️ Back to Dashboard</button>
+     </div>
+    </div>
+    <div id="profileUpdateSuccess" class="success-message hidden"></div>
+    <div class="card">
+     <h3>🎭 Avatar &amp; Personal Info</h3>
+     <div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;">
+      <div style="text-align: center; min-width: 120px;">
+       <div id="avatarDisplay" style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 48px; color: white; margin: 0 auto 15px;">
+        👤
+       </div><button class="btn btn-secondary" id="changeAvatarBtn" style="width: auto; padding: 8px 16px; font-size: 14px;">📸 Change Avatar</button>
+      </div>
+      <div style="flex: 1; min-width: 250px;">
+       <form id="profileForm">
+        <div class="form-group"><label for="profileEmail">📧 Email</label> <input type="email" id="profileEmail" placeholder="your.email@example.com">
+        </div>
+        <div class="form-group"><label for="profilePhone">📱 Phone</label> <input type="tel" id="profilePhone" placeholder="+1 (555) 123-4567">
+        </div>
+        <div class="form-group"><label for="profileBio">📝 Bio</label> <input type="text" id="profileBio" placeholder="Tell us about yourself..." maxlength="100">
+        </div><button type="submit" class="btn btn-primary" id="updateProfileBtn" style="width: auto; padding: 12px 24px; font-size: 14px;">💾 Update Profile</button>
+       </form>
+      </div>
+     </div>
+    </div><!-- Avatar Selection Modal -->
+    <div id="avatarModal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; display: none; align-items: center; justify-content: center;">
+     <div id="avatarModalContent" style="background: white; padding: 30px; border-radius: 20px; max-width: 500px; width: 90%; max-height: 80%; overflow-y: auto;">
+      <h3 style="margin-top: 0;">🎭 Choose Your Avatar</h3>
+      <div id="avatarOptions" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); gap: 15px; margin: 20px 0;"><!-- Avatar options will be populated here -->
+      </div>
+      <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;"><button class="btn btn-secondary" id="cancelAvatarBtn" style="width: auto; padding: 10px 20px; font-size: 14px;">❌ Cancel</button>
+      </div>
+     </div>
+    </div>
+   </div><!-- Admin Panel -->
+   <div id="adminScreen" class="dashboard-card hidden">
+    <div class="header">
+     <div>
+      <h1>⚙️ Admin Control Panel</h1>
+      <p class="subtitle">Manage all wellness warriors and teams</p>
+     </div>
+     <div class="user-info"><button class="btn btn-secondary" id="backFromAdminBtn" style="width: auto; padding: 12px 24px; font-size: 14px;">⬅️ Back to Dashboard</button>
+     </div>
+    </div>
+    <div id="adminSuccess" class="success-message hidden"></div>
+    <div class="grid">
+     <div class="card">
+      <h3>📊 System Overview</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 20px; margin: 20px 0;">
+       <div style="text-align: center;">
+        <div class="stat-value" id="adminTotalUsers" style="font-size: 32px;">
+         0
+        </div>
+        <div class="stat-label">
+         Total Users
+        </div>
+       </div>
+       <div style="text-align: center;">
+        <div class="stat-value" id="adminActiveTeams" style="font-size: 32px;">
+         0
+        </div>
+        <div class="stat-label">
+         Active Teams
+        </div>
+       </div>
+       <div style="text-align: center;">
+        <div class="stat-value" id="adminTotalSteps" style="font-size: 32px;">
+         0
+        </div>
+        <div class="stat-label">
+         Total Steps
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <h3>🗑️ Quick Actions</h3>
+      <div style="display: flex; flex-direction: column; gap: 15px;"><button class="btn btn-secondary" id="resetDailyDataBtn" style="width: 100%;">🔄 Reset All Daily Data</button> <button class="btn btn-secondary" id="exportDataBtn" style="width: 100%;">📊 Export User Data</button> <button class="btn btn-logout" id="clearAllDataBtn" style="width: 100%;">⚠️ Clear All Data (Danger!)</button>
+      </div>
+     </div>
+    </div>
+    <div class="card">
+     <h3>👥 User Management</h3>
+     <div style="margin-bottom: 20px;"><input type="text" id="adminSearchInput" placeholder="🔍 Search users by username..." style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 12px;">
+     </div>
+     <div id="adminUserList" style="max-height: 400px; overflow-y: auto;"><!-- User list will be populated here -->
+     </div>
     </div>
    </div>
   </div>
@@ -722,6 +1033,8 @@
     
     let currentUser = null;
     let allUsers = [];
+    
+    const AVATAR_OPTIONS = ['👤', '🧑‍💼', '👩‍💼', '🧑‍🎓', '👩‍🎓', '🧑‍⚕️', '👩‍⚕️', '🧑‍🏫', '👩‍🏫', '🧑‍💻', '👩‍💻', '🧑‍🎨', '👩‍🎨', '🧑‍🍳', '👩‍🍳', '🧑‍🔧', '👩‍🔧', '🧑‍🚀', '👩‍🚀', '🦸‍♂️', '🦸‍♀️', '🧙‍♂️', '🧙‍♀️', '🧚‍♂️', '🧚‍♀️', '🧛‍♂️', '🧛‍♀️', '🧜‍♂️', '🧜‍♀️', '🧞‍♂️', '🧞‍♀️'];
     
     const defaultConfig = {
       app_title: "Wellness Quest",
@@ -895,6 +1208,13 @@
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       
+      const btn = document.getElementById('registerBtn');
+      
+      // Prevent double submission
+      if (btn.disabled) {
+        return;
+      }
+      
       if (allUsers.length >= 999) {
         showMessage('registerError', '⚠️ Maximum limit of 999 adventurers reached. Please contact the quest master.');
         return;
@@ -915,12 +1235,11 @@
         return;
       }
       
-      const btn = document.getElementById('registerBtn');
       btn.disabled = true;
       btn.textContent = '✨ Creating your adventure...';
       
       const newUser = {
-        id: Date.now().toString(),
+        id: `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         username,
         password,
         team_id: teamId,
@@ -939,14 +1258,17 @@
           document.getElementById('registerForm').reset();
           setTimeout(() => {
             document.getElementById('showLoginBtn').click();
+            hideMessage('loginSuccess');
           }, 1500);
         } else {
           showMessage('registerError', '❌ Failed to create your adventure profile. Try again!');
+          btn.disabled = false;
+          btn.textContent = '🎉 Create Account';
         }
+      } else {
+        btn.disabled = false;
+        btn.textContent = '🎉 Create Account';
       }
-      
-      btn.disabled = false;
-      btn.textContent = '🎉 Create Account';
     });
     
     // Activity Form
@@ -965,34 +1287,65 @@
       
       const btn = document.getElementById('updateBtn');
       btn.disabled = true;
-      btn.textContent = '⚡ Updating adventure log...';
+      btn.textContent = '⚡ Logging daily entry...';
       
+      const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+      
+      // Create a new daily entry record
+      const dailyEntry = {
+        id: `${currentUser.id}_${today}_${Date.now()}`,
+        username: currentUser.username,
+        team_id: currentUser.team_id,
+        entry_date: today,
+        steps_today: steps,
+        water_intake: water,
+        sitting_hours: sitting,
+        effective_steps: effectiveSteps,
+        daily_goal_steps: steps >= 10000,
+        daily_goal_water: water >= 8,
+        last_updated: new Date().toISOString()
+      };
+      
+      // Update user's current stats
       const updatedUser = {
         ...currentUser,
         steps_today: steps,
         water_intake: water,
         sitting_hours: sitting,
         total_steps: (currentUser.total_steps || 0) + effectiveSteps,
+        daily_goal_steps: steps >= 10000,
+        daily_goal_water: water >= 8,
         last_updated: new Date().toISOString()
       };
       
       if (window.dataSdk) {
-        const result = await window.dataSdk.update(updatedUser);
+        // Create daily entry record
+        const entryResult = await window.dataSdk.create(dailyEntry);
         
-        if (result.isOk) {
-          currentUser = updatedUser;
-          let message = `🎯 Adventure log updated! +${effectiveSteps.toLocaleString()} steps added to your journey!`;
-          if (sitting > 4) {
-            message += ` ⚠️ Sitting penalty applied - keep moving, warrior!`;
+        if (entryResult.isOk) {
+          // Update user record
+          const userResult = await window.dataSdk.update(updatedUser);
+          
+          if (userResult.isOk) {
+            currentUser = updatedUser;
+            let message = `🎯 Daily entry logged! +${effectiveSteps.toLocaleString()} steps added to your journey!`;
+            
+            if (steps >= 10000) message += ` 🏆 Steps goal achieved!`;
+            if (water >= 8) message += ` 💧 Hydration goal achieved!`;
+            if (sitting > 4) message += ` ⚠️ Sitting penalty applied - keep moving!`;
+            
+            showMessage('updateSuccess', message);
+            document.getElementById('activityForm').reset();
+            setTimeout(() => hideMessage('updateSuccess'), 5000);
           }
-          showMessage('updateSuccess', message);
-          document.getElementById('activityForm').reset();
-          setTimeout(() => hideMessage('updateSuccess'), 4000);
+        } else {
+          showMessage('updateSuccess', '❌ Failed to log daily entry. Please try again.');
+          setTimeout(() => hideMessage('updateSuccess'), 3000);
         }
       }
       
       btn.disabled = false;
-      btn.textContent = '🎯 Update Progress';
+      btn.textContent = '🎯 Log Today\'s Activity';
     });
     
     // Navigation
@@ -1012,8 +1365,176 @@
     document.getElementById('logoutBtn').addEventListener('click', () => {
       currentUser = null;
       document.getElementById('dashboardScreen').classList.add('hidden');
+      document.getElementById('profileScreen').classList.add('hidden');
       document.getElementById('loginScreen').classList.remove('hidden');
       document.getElementById('loginForm').reset();
+    });
+    
+    document.getElementById('profileBtn').addEventListener('click', () => {
+      document.getElementById('dashboardScreen').classList.add('hidden');
+      document.getElementById('profileScreen').classList.remove('hidden');
+      loadUserProfile();
+    });
+    
+    document.getElementById('backToDashboardBtn').addEventListener('click', () => {
+      document.getElementById('profileScreen').classList.add('hidden');
+      document.getElementById('dashboardScreen').classList.remove('hidden');
+    });
+    
+    // Admin Panel Navigation
+    document.getElementById('backFromAdminBtn').addEventListener('click', () => {
+      document.getElementById('adminScreen').classList.add('hidden');
+      document.getElementById('dashboardScreen').classList.remove('hidden');
+    });
+    
+    // Admin access (secret key combination: Ctrl+Shift+A)
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A' && currentUser) {
+        document.getElementById('dashboardScreen').classList.add('hidden');
+        document.getElementById('profileScreen').classList.add('hidden');
+        document.getElementById('adminScreen').classList.remove('hidden');
+        updateAdminPanel();
+      }
+    });
+    
+    // Admin Panel Functions
+    document.getElementById('resetDailyDataBtn').addEventListener('click', async () => {
+      if (!confirm('⚠️ This will reset all daily data (steps_today, water_intake, sitting_hours) for all users. Continue?')) return;
+      
+      const btn = document.getElementById('resetDailyDataBtn');
+      btn.disabled = true;
+      btn.textContent = '🔄 Resetting...';
+      
+      let resetCount = 0;
+      for (const user of allUsers) {
+        if (user.steps_today || user.water_intake || user.sitting_hours) {
+          const updatedUser = {
+            ...user,
+            steps_today: 0,
+            water_intake: 0,
+            sitting_hours: 0,
+            last_updated: new Date().toISOString()
+          };
+          
+          const result = await window.dataSdk.update(updatedUser);
+          if (result.isOk) resetCount++;
+        }
+      }
+      
+      showMessage('adminSuccess', `✅ Reset daily data for ${resetCount} users successfully!`);
+      setTimeout(() => hideMessage('adminSuccess'), 3000);
+      
+      btn.disabled = false;
+      btn.textContent = '🔄 Reset All Daily Data';
+    });
+    
+    document.getElementById('exportDataBtn').addEventListener('click', () => {
+      const csvData = [
+        ['Username', 'Team', 'Total Steps', 'Steps Today', 'Water Today', 'Sitting Hours', 'Last Updated'],
+        ...allUsers.map(user => [
+          user.username,
+          TEAM_TOKENS[user.team_id]?.name || user.team_id,
+          user.total_steps || 0,
+          user.steps_today || 0,
+          user.water_intake || 0,
+          user.sitting_hours || 0,
+          user.last_updated || ''
+        ])
+      ];
+      
+      const csvContent = csvData.map(row => row.join(',')).join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `wellness_quest_data_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      
+      showMessage('adminSuccess', '📊 Data exported successfully!');
+      setTimeout(() => hideMessage('adminSuccess'), 3000);
+    });
+    
+    document.getElementById('clearAllDataBtn').addEventListener('click', async () => {
+      const confirmation = prompt('⚠️ DANGER: This will delete ALL user data permanently! Type "DELETE ALL DATA" to confirm:');
+      if (confirmation !== 'DELETE ALL DATA') return;
+      
+      const btn = document.getElementById('clearAllDataBtn');
+      btn.disabled = true;
+      btn.textContent = '🗑️ Deleting...';
+      
+      let deleteCount = 0;
+      for (const user of allUsers) {
+        const result = await window.dataSdk.delete(user);
+        if (result.isOk) deleteCount++;
+      }
+      
+      showMessage('adminSuccess', `🗑️ Deleted ${deleteCount} user records. System reset complete.`);
+      setTimeout(() => {
+        hideMessage('adminSuccess');
+        // Logout and return to login screen
+        document.getElementById('logoutBtn').click();
+      }, 3000);
+      
+      btn.disabled = false;
+      btn.textContent = '⚠️ Clear All Data (Danger!)';
+    });
+    
+    document.getElementById('adminSearchInput').addEventListener('input', (e) => {
+      updateAdminUserList(e.target.value.toLowerCase());
+    });
+    
+    // Profile Management
+    document.getElementById('changeAvatarBtn').addEventListener('click', () => {
+      showAvatarModal();
+    });
+    
+    document.getElementById('cancelAvatarBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      hideAvatarModal();
+    });
+    
+    // Close modal when clicking outside the content
+    document.getElementById('avatarModal').addEventListener('click', (e) => {
+      if (e.target.id === 'avatarModal') {
+        hideAvatarModal();
+      }
+    });
+    
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('profileEmail').value.trim();
+      const phone = document.getElementById('profilePhone').value.trim();
+      const bio = document.getElementById('profileBio').value.trim();
+      
+      const btn = document.getElementById('updateProfileBtn');
+      btn.disabled = true;
+      btn.textContent = '💾 Updating...';
+      
+      const updatedUser = {
+        ...currentUser,
+        email: email,
+        phone: phone,
+        bio: bio,
+        last_updated: new Date().toISOString()
+      };
+      
+      if (window.dataSdk) {
+        const result = await window.dataSdk.update(updatedUser);
+        
+        if (result.isOk) {
+          currentUser = updatedUser;
+          showMessage('profileUpdateSuccess', '✅ Profile updated successfully!');
+          setTimeout(() => hideMessage('profileUpdateSuccess'), 3000);
+        } else {
+          showMessage('profileUpdateSuccess', '❌ Failed to update profile. Please try again.');
+          setTimeout(() => hideMessage('profileUpdateSuccess'), 3000);
+        }
+      }
+      
+      btn.disabled = false;
+      btn.textContent = '💾 Update Profile';
     });
     
     function showDashboard() {
@@ -1021,10 +1542,102 @@
       document.getElementById('dashboardScreen').classList.remove('hidden');
       const teamInfo = TEAM_TOKENS[currentUser.team_id];
       document.getElementById('userBadge').textContent = `${teamInfo.emoji} ${currentUser.username} - ${teamInfo.name}`;
+      loadUserProfile();
       updateDashboard();
     }
     
+    function loadUserProfile() {
+      // Load avatar
+      const avatar = currentUser.avatar || '👤';
+      document.getElementById('avatarDisplay').textContent = avatar;
+      
+      // Load profile data
+      document.getElementById('profileEmail').value = currentUser.email || '';
+      document.getElementById('profilePhone').value = currentUser.phone || '';
+      document.getElementById('profileBio').value = currentUser.bio || '';
+    }
+    
+    function showAvatarModal() {
+      const modal = document.getElementById('avatarModal');
+      const optionsContainer = document.getElementById('avatarOptions');
+      
+      optionsContainer.innerHTML = '';
+      
+      AVATAR_OPTIONS.forEach(avatar => {
+        const avatarDiv = document.createElement('div');
+        avatarDiv.style.cssText = `
+          width: 60px; 
+          height: 60px; 
+          border-radius: 50%; 
+          background: linear-gradient(135deg, #667eea, #764ba2); 
+          display: flex; 
+          align-items: center; 
+          justify-content: center; 
+          font-size: 32px; 
+          color: white; 
+          cursor: pointer; 
+          transition: all 0.2s ease; 
+          border: 3px solid transparent;
+        `;
+        avatarDiv.textContent = avatar;
+        
+        // Use a closure to capture the avatar value
+        avatarDiv.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          selectAvatar(avatar);
+        });
+        
+        avatarDiv.addEventListener('mouseover', function() {
+          this.style.transform = 'scale(1.1)';
+          this.style.borderColor = '#667eea';
+        });
+        
+        avatarDiv.addEventListener('mouseout', function() {
+          this.style.transform = 'scale(1)';
+          this.style.borderColor = 'transparent';
+        });
+        
+        optionsContainer.appendChild(avatarDiv);
+      });
+      
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+    }
+    
+    function hideAvatarModal() {
+      const modal = document.getElementById('avatarModal');
+      modal.classList.add('hidden');
+      modal.style.display = 'none';
+    }
+    
+    async function selectAvatar(avatar) {
+      const updatedUser = {
+        ...currentUser,
+        avatar: avatar,
+        last_updated: new Date().toISOString()
+      };
+      
+      if (window.dataSdk) {
+        const result = await window.dataSdk.update(updatedUser);
+        
+        if (result.isOk) {
+          currentUser = updatedUser;
+          document.getElementById('avatarDisplay').textContent = avatar;
+          hideAvatarModal();
+          showMessage('profileUpdateSuccess', '🎭 Avatar updated successfully!');
+          setTimeout(() => hideMessage('profileUpdateSuccess'), 3000);
+        }
+      }
+    }
+    
     function updateDashboard() {
+      // Find current user in the updated data
+      const updatedCurrentUser = allUsers.find(u => u.id === currentUser.id);
+      if (updatedCurrentUser) {
+        currentUser = updatedCurrentUser;
+      }
+      
       const teamMembers = allUsers.filter(u => u.team_id === currentUser.team_id);
       const teamTotalSteps = teamMembers.reduce((sum, u) => sum + (u.total_steps || 0), 0);
       const allTotalSteps = allUsers.reduce((sum, u) => sum + (u.total_steps || 0), 0);
@@ -1036,19 +1649,249 @@
       const progressPercent = Math.min(100, (allTotalSteps / TOTAL_JOURNEY_STEPS) * 100);
       document.getElementById('progressPercent').textContent = progressPercent.toFixed(1) + '%';
       
-      // Calculate estimated days remaining
-      const avgStepsPerDay = allTotalSteps / Math.max(1, allUsers.length);
-      const remainingSteps = TOTAL_JOURNEY_STEPS - allTotalSteps;
-      const daysRemaining = remainingSteps > 0 ? Math.ceil(remainingSteps / Math.max(1, avgStepsPerDay)) : 0;
-      document.getElementById('daysRemaining').textContent = daysRemaining > 0 ? daysRemaining : '🎉';
+      // Calculate days remaining in 4-month program (120 days from start)
+      const programStartDate = new Date(); // Program starts today
+      const programEndDate = new Date(programStartDate);
+      programEndDate.setDate(programStartDate.getDate() + 120); // 4 months = 120 days
       
-      const userContribution = currentUser.total_steps / TOTAL_JOURNEY_STEPS * 100;
+      const today = new Date();
+      const daysRemaining = Math.max(0, Math.ceil((programEndDate - today) / (1000 * 60 * 60 * 24)));
+      document.getElementById('daysRemaining').textContent = daysRemaining > 0 ? daysRemaining : '🎉 Complete!';
+      
+      const userContribution = (currentUser.total_steps || 0) / TOTAL_JOURNEY_STEPS * 100;
       document.getElementById('userProgress').style.width = Math.min(100, userContribution) + '%';
       
+      updateDailyGoals();
+      updatePersonalChart();
       updateTeamHydration(teamMembers);
+      updateTeamGoalsStats(teamMembers);
       updateTeamLeaderboard();
       updateTeamMembers(teamMembers);
       updateJourneyMap();
+    }
+    
+    function updatePersonalChart() {
+      // Get user's daily entries for the last 7 days
+      const userEntries = allUsers.filter(u => u.username === currentUser.username);
+      const last7Days = [];
+      
+      for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        const dateStr = date.toISOString().split('T')[0];
+        
+        // Find entry for this date
+        const dayEntry = userEntries.find(entry => {
+          const entryDate = new Date(entry.last_updated || 0).toISOString().split('T')[0];
+          return entryDate === dateStr;
+        });
+        
+        last7Days.push({
+          date: dateStr,
+          steps: dayEntry ? (dayEntry.steps_today || 0) : 0,
+          label: date.toLocaleDateString('en-US', { weekday: 'short' })
+        });
+      }
+      
+      const maxSteps = Math.max(...last7Days.map(d => d.steps), 10000);
+      const chartBars = document.getElementById('chartBars');
+      const chartLabels = document.getElementById('chartLabels');
+      
+      chartBars.innerHTML = '';
+      chartLabels.innerHTML = '';
+      
+      last7Days.forEach(day => {
+        const barHeight = Math.max(4, (day.steps / maxSteps) * 140);
+        const isGoalMet = day.steps >= 10000;
+        
+        const bar = document.createElement('div');
+        bar.style.cssText = `
+          width: 24px;
+          height: ${barHeight}px;
+          background: ${isGoalMet ? 'linear-gradient(135deg, #48bb78, #38a169)' : 'linear-gradient(135deg, #667eea, #764ba2)'};
+          border-radius: 4px 4px 0 0;
+          position: relative;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        `;
+        
+        bar.title = `${day.label}: ${day.steps.toLocaleString()} steps${isGoalMet ? ' ✅' : ''}`;
+        
+        bar.addEventListener('mouseover', () => {
+          bar.style.transform = 'scale(1.1)';
+        });
+        
+        bar.addEventListener('mouseout', () => {
+          bar.style.transform = 'scale(1)';
+        });
+        
+        chartBars.appendChild(bar);
+        
+        const label = document.createElement('div');
+        label.textContent = day.label;
+        label.style.cssText = 'flex: 1; text-align: center; font-weight: 600;';
+        chartLabels.appendChild(label);
+      });
+    }
+    
+    function updateAdminPanel() {
+      const uniqueUsers = {};
+      allUsers.forEach(user => {
+        if (!uniqueUsers[user.username]) {
+          uniqueUsers[user.username] = { ...user, total_steps: 0 };
+        }
+        uniqueUsers[user.username].total_steps += (user.total_steps || 0);
+      });
+      
+      const totalUsers = Object.keys(uniqueUsers).length;
+      const activeTeams = new Set(Object.values(uniqueUsers).map(u => u.team_id)).size;
+      const totalSteps = Object.values(uniqueUsers).reduce((sum, u) => sum + u.total_steps, 0);
+      
+      document.getElementById('adminTotalUsers').textContent = totalUsers;
+      document.getElementById('adminActiveTeams').textContent = activeTeams;
+      document.getElementById('adminTotalSteps').textContent = totalSteps.toLocaleString();
+      
+      updateAdminUserList();
+    }
+    
+    function updateAdminUserList(searchTerm = '') {
+      const uniqueUsers = {};
+      allUsers.forEach(user => {
+        if (!uniqueUsers[user.username]) {
+          uniqueUsers[user.username] = { ...user, total_steps: 0, daily_entries: 0 };
+        }
+        uniqueUsers[user.username].total_steps += (user.total_steps || 0);
+        uniqueUsers[user.username].daily_entries++;
+        
+        if (new Date(user.last_updated || 0) > new Date(uniqueUsers[user.username].last_updated || 0)) {
+          uniqueUsers[user.username] = {
+            ...uniqueUsers[user.username],
+            ...user,
+            total_steps: uniqueUsers[user.username].total_steps,
+            daily_entries: uniqueUsers[user.username].daily_entries
+          };
+        }
+      });
+      
+      const filteredUsers = Object.values(uniqueUsers).filter(user => 
+        user.username.toLowerCase().includes(searchTerm)
+      ).sort((a, b) => b.total_steps - a.total_steps);
+      
+      const userListEl = document.getElementById('adminUserList');
+      userListEl.innerHTML = filteredUsers.map(user => {
+        const teamInfo = TEAM_TOKENS[user.team_id];
+        const avatar = user.avatar || '👤';
+        
+        return `
+          <div class="member-item" style="justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+              <span style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 18px; color: white;">${avatar}</span>
+              <div>
+                <div style="font-weight: 700; color: #2d3748;">${user.username}</div>
+                <div style="font-size: 12px; color: #718096;">${teamInfo.emoji} ${teamInfo.name}</div>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-weight: 600;">${user.total_steps.toLocaleString()} steps</div>
+              <div style="font-size: 12px; color: #718096;">${user.daily_entries} entries</div>
+            </div>
+            <button class="btn btn-logout" onclick="deleteUser('${user.id}')" style="width: auto; padding: 6px 12px; font-size: 12px; margin-left: 15px;">🗑️ Delete</button>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    async function deleteUser(userId) {
+      if (!confirm('⚠️ Delete this user permanently?')) return;
+      
+      const userToDelete = allUsers.find(u => u.id === userId);
+      if (!userToDelete) return;
+      
+      const result = await window.dataSdk.delete(userToDelete);
+      if (result.isOk) {
+        showMessage('adminSuccess', `🗑️ User "${userToDelete.username}" deleted successfully!`);
+        setTimeout(() => hideMessage('adminSuccess'), 3000);
+        updateAdminPanel();
+      }
+    }
+    
+    // Make deleteUser available globally for onclick handlers
+    window.deleteUser = deleteUser;
+    
+    function updateDailyGoals() {
+      const stepsToday = currentUser.steps_today || 0;
+      const waterToday = currentUser.water_intake || 0;
+      const sittingToday = currentUser.sitting_hours || 0;
+      
+      // Steps goal progress
+      const stepsProgress = Math.min(100, (stepsToday / 10000) * 100);
+      document.getElementById('stepsGoalProgress').style.width = stepsProgress + '%';
+      document.getElementById('stepsGoalText').textContent = `${stepsToday.toLocaleString()} / 10,000 steps`;
+      
+      const stepsGoalEl = document.getElementById('stepsGoalStatus');
+      if (stepsToday >= 10000) {
+        stepsGoalEl.textContent = '🏆 Achieved!';
+        stepsGoalEl.className = 'hydration-status hydration-good';
+      } else if (stepsToday >= 5000) {
+        stepsGoalEl.textContent = '🔥 Halfway!';
+        stepsGoalEl.className = 'hydration-status hydration-warning';
+      } else if (stepsToday > 0) {
+        stepsGoalEl.textContent = '🚶‍♂️ Started';
+        stepsGoalEl.className = 'hydration-status hydration-warning';
+      } else {
+        stepsGoalEl.textContent = '😴 Not Started';
+        stepsGoalEl.className = 'hydration-status hydration-danger';
+      }
+      
+      // Water goal progress
+      const waterProgress = Math.min(100, (waterToday / 8) * 100);
+      const waterMl = waterToday * 250;
+      document.getElementById('waterGoalProgress').style.width = waterProgress + '%';
+      document.getElementById('waterGoalText').textContent = `${waterToday} / 8 cups (${waterMl}ml / 2000ml)`;
+      
+      const waterGoalEl = document.getElementById('waterGoalStatus');
+      if (waterToday >= 8) {
+        waterGoalEl.textContent = '💧 Hydrated!';
+        waterGoalEl.className = 'hydration-status hydration-good';
+      } else if (waterToday >= 4) {
+        waterGoalEl.textContent = '🥤 Halfway';
+        waterGoalEl.className = 'hydration-status hydration-warning';
+      } else if (waterToday > 0) {
+        waterGoalEl.textContent = '💦 Started';
+        waterGoalEl.className = 'hydration-status hydration-warning';
+      } else {
+        waterGoalEl.textContent = '🏜️ Dry';
+        waterGoalEl.className = 'hydration-status hydration-danger';
+      }
+      
+      // Sitting goal progress (reverse - less sitting is better)
+      const sittingProgress = Math.min(100, (sittingToday / 4) * 100);
+      document.getElementById('sittingGoalProgress').style.width = sittingProgress + '%';
+      document.getElementById('sittingGoalText').textContent = `${sittingToday} / 4 hours max`;
+      
+      const sittingGoalEl = document.getElementById('sittingGoalStatus');
+      if (sittingToday <= 4) {
+        sittingGoalEl.textContent = '✅ Great!';
+        sittingGoalEl.className = 'hydration-status hydration-good';
+      } else if (sittingToday <= 6) {
+        sittingGoalEl.textContent = '⚠️ Too Much';
+        sittingGoalEl.className = 'hydration-status hydration-warning';
+      } else {
+        sittingGoalEl.textContent = '🚨 Danger Zone';
+        sittingGoalEl.className = 'hydration-status hydration-danger';
+      }
+    }
+    
+    function updateTeamGoalsStats(teamMembers) {
+      const stepsAchievers = teamMembers.filter(u => (u.steps_today || 0) >= 10000).length;
+      const waterAchievers = teamMembers.filter(u => (u.water_intake || 0) >= 8).length;
+      const totalMembers = teamMembers.length;
+      
+      const statsEl = document.getElementById('teamGoalsStats');
+      statsEl.innerHTML = `
+        <div style="margin-bottom: 5px;">👣 Steps Goals: ${stepsAchievers}/${totalMembers} members (${Math.round(stepsAchievers/totalMembers*100)}%)</div>
+        <div>💧 Water Goals: ${waterAchievers}/${totalMembers} members (${Math.round(waterAchievers/totalMembers*100)}%)</div>
+      `;
     }
     
     function updateTeamHydration(teamMembers) {
@@ -1117,17 +1960,48 @@
     }
     
     function updateTeamMembers(teamMembers) {
-      const sortedMembers = [...teamMembers].sort((a, b) => (b.total_steps || 0) - (a.total_steps || 0));
+      // Group by username to get unique members with accumulated stats
+      const uniqueMembers = {};
+      
+      teamMembers.forEach(member => {
+        if (!uniqueMembers[member.username]) {
+          uniqueMembers[member.username] = {
+            ...member,
+            total_steps: 0,
+            daily_entries: 0
+          };
+        }
+        
+        // Accumulate total steps from all entries for this user
+        uniqueMembers[member.username].total_steps += (member.total_steps || 0);
+        uniqueMembers[member.username].daily_entries++;
+        
+        // Keep the most recent user data (avatar, etc.)
+        if (new Date(member.last_updated || 0) > new Date(uniqueMembers[member.username].last_updated || 0)) {
+          uniqueMembers[member.username] = {
+            ...uniqueMembers[member.username],
+            ...member,
+            total_steps: uniqueMembers[member.username].total_steps,
+            daily_entries: uniqueMembers[member.username].daily_entries
+          };
+        }
+      });
+      
+      const sortedMembers = Object.values(uniqueMembers).sort((a, b) => (b.total_steps || 0) - (a.total_steps || 0));
       
       const membersEl = document.getElementById('teamMembers');
       membersEl.innerHTML = sortedMembers.map((member, index) => {
-        const isCurrentUser = member.id === currentUser.id;
+        const isCurrentUser = member.username === currentUser.username;
         const penalty = member.sitting_hours > 4 ? `<span class="penalty-badge">-${Math.floor((member.sitting_hours - 4) * 1000)} sitting penalty</span>` : '';
         const rank = index === 0 ? '👑' : `#${index + 1}`;
+        const avatar = member.avatar || '👤';
         
         return `
           <div class="member-item ${isCurrentUser ? 'current-user' : ''}">
-            <span>${rank} ${member.username} ${isCurrentUser ? '(You)' : ''}</span>
+            <span style="display: flex; align-items: center; gap: 10px;">
+              <span style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 18px; color: white;">${avatar}</span>
+              ${rank} ${member.username} ${isCurrentUser ? '(You)' : ''}
+            </span>
             <span>🏃‍♂️ ${(member.total_steps || 0).toLocaleString()} steps ${penalty}</span>
           </div>
         `;
@@ -1177,5 +2051,5 @@
     
     initApp();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9991db1cd701797b',t:'MTc2MjIzNTY1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9999945244be8986',t:'MTc2MjMxNjY0NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
